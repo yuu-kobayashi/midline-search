@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Google Search Center",
+  "name": "Midline Search",
   "version": "0.1.0",
   "description": "Google検索結果ページのコンテンツを中央寄せにする拡張機能",
   "permissions": [],
