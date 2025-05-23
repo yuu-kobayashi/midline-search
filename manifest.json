@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Google Search Center",
+  "version": "0.1.0",
+  "description": "Google検索結果ページのコンテンツを中央寄せにする拡張機能",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["*://*.google.com/search*"],
+      "css": ["styles.css"]
+    }
+  ]
+} 
