@@ -3,12 +3,21 @@
   "name": "Midline Search",
   "version": "0.1.0",
   "description": "Google検索結果ページのコンテンツを中央寄せにする拡張機能",
-  "permissions": [],
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Midline Search 設定"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   "content_scripts": [
     {
       "matches": ["*://*.google.com/search*"],
       "css": ["styles.css"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "run_at": "document_start"
     }
   ]
 } 

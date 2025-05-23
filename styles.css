@@ -1,2 +1,12 @@
 /* Google Search Center styles */
-#rcnt { margin-inline: auto; } 
+#searchform,
+.rfiSsc {
+    width: 50% !important;
+    left: 50%;
+    transform: translateX(-60%);
+}
+
+#rcnt {
+    width: 50%;
+    margin-inline: auto;
+}
