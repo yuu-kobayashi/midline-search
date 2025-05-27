@@ -1,0 +1,43 @@
+/* Common */
+.midline-search-wide .YNk70c {
+	grid-template-columns: minmax(0, 1fr) repeat(20, 36px) minmax(0, 1fr) !important;
+}
+.midline-search-wide .YNk70c .P3mIxe {
+	grid-column: 2 / -2;
+	margin-left: 15%;
+}
+.midline-search-wide #rcnt #center_col {
+	grid-column: 6 / span 12;
+}
+.midline-search-wide #rcnt:has(.vVVcqf) #center_col {
+	grid-column: 2 / span 12;
+}
+.midline-search-wide #fbar .fbar > *,
+.midline-search-wide #fbar .GeEc1b {
+	display: flex;
+	justify-content: center;
+}
+
+/* Shopping */
+.midline-search-wide .sBbkle {
+	margin-left: 0 !important;
+}
+.midline-search-wide .xhjkHe {
+	max-width: 100% !important;
+}
+.midline-search-wide .qogDvd,
+.midline-search-wide .NDnoQ {
+	justify-content: center !important;
+	padding-left: 0 !important;
+}
+.midline-search-wide .qogDvd {
+	width: 100% !important;
+}
+.midline-search-wide .KpqFHb {
+	margin-inline: auto !important;
+}
+
+/* Books */
+.midline-search-wide #hdtbMenus .y6UnXe {
+	padding-left: 10%;
+}

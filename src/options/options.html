@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Midline Search 設定</title>
+		<link rel="stylesheet" href="options.css" />
+		<link rel="icon" type="image/png" href="../icons/icon-32.png" />
+	</head>
+	<body>
+		<div class="header">
+			<div class="header-inner">
+				<div class="header-logo">
+					<img src="../icons/midline-search_icon_white.png" alt="" />
+					<h1>Midline Search</h1>
+				</div>
+				<div class="header-menu">
+					<a href="#" target="_blank">
+						更新履歴
+					</a>
+					<a href="#" target="_blank">
+						バグ報告
+					</a>
+					<a href="#" target="_blank">
+						寄付
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="description">
+			<p>
+				Google検索結果ページのレイアウトを中央揃えに変更するChrome拡張機能です。
+			</p>
+			<p>
+				このページでは、基準となる画面幅（px）の設定とカスタムCSSの編集を行えます。
+			</p>
+		</div>
+		<div class="container">
+			<div class="form-group">
+				<h2>画面幅設定</h2>
+				<label for="breakpoint-input">メディアクエリの開始位置（px）:</label>
+				<div class="input-group">
+					<input type="number" id="breakpoint-input" min="320" max="2560" value="1280" />
+					<button id="save-breakpoint">保存</button>
+				</div>
+				<p class="help-text">
+					この値以上の画面幅で中央揃えのスタイルが適用されます。<br />
+					（デフォルト値: 1280px）
+				</p>
+			</div>
+
+			<div class="form-group">
+				<h2>追加スタイル調整</h2>
+				<label for="css-editor">カスタムCSS:</label>
+				<textarea id="css-editor"></textarea>
+				<p class="help-text">保存ボタンをクリックすると、入力したCSSがGoogle検索結果ページに追加適用されます。</p>
+				<div class="button-group">
+					<button id="reset-button">編集内容を破棄</button>
+					<button id="save-button">保存</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer">
+			<small> Created by <a href="https://portfolio.yusukeweb.work/" target="_blank">Yusuke Kobayashi</a> </small>
+		</div>
+
+		<!-- リセット確認モーダル -->
+		<div id="reset-modal" class="modal">
+			<div class="modal-content">
+				<h2 class="modal-title">リセットの確認</h2>
+				<p class="modal-message">カスタムCSSを編集前の状態に戻しますか？</p>
+				<div class="modal-buttons">
+					<button class="modal-button cancel" id="cancel-reset">キャンセル</button>
+					<button class="modal-button confirm" id="confirm-reset">リセット</button>
+				</div>
+			</div>
+		</div>
+
+		<script src="options.js"></script>
+	</body>
+</html>
