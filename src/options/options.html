@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Midline Search 設定</title>
+		<title data-i18n="settings_title"></title>
 		<link rel="stylesheet" href="options.css" />
 		<link rel="icon" type="image/png" href="../icons/icon-32.png" />
 	</head>
@@ -12,51 +12,38 @@
 			<div class="header-inner">
 				<div class="header-logo">
 					<img src="../icons/midline-search_icon_white.png" alt="" />
-					<h1>Midline Search</h1>
+					<h1 data-i18n="ext_name"></h1>
 				</div>
 				<div class="header-menu">
-					<a href="#" target="_blank">
-						更新履歴
-					</a>
-					<a href="#" target="_blank">
-						バグ報告
-					</a>
-					<a href="#" target="_blank">
-						寄付
-					</a>
+					<a href="#" target="_blank" data-i18n="changelog"></a>
+					<a href="#" target="_blank" data-i18n="report_bug"></a>
+					<a href="#" target="_blank" data-i18n="donate"></a>
 				</div>
 			</div>
 		</div>
 		<div class="description">
-			<p>
-				Google検索結果ページのレイアウトを中央揃えに変更するChrome拡張機能です。
-			</p>
-			<p>
-				このページでは、基準となる画面幅（px）の設定とカスタムCSSの編集を行えます。
-			</p>
+			<p data-i18n="settings_desc"></p>
+			<p data-i18n="settings_desc2"></p>
 		</div>
 		<div class="container">
 			<div class="form-group">
-				<h2>画面幅設定</h2>
-				<label for="breakpoint-input">メディアクエリの開始位置（px）:</label>
+				<h2 data-i18n="screen_width_settings"></h2>
+				<label for="breakpoint-input" data-i18n="media_query_start"></label>
 				<div class="input-group">
 					<input type="number" id="breakpoint-input" min="320" max="2560" value="1280" />
-					<button id="save-breakpoint">保存</button>
+					<button id="save-breakpoint" data-i18n="save"></button>
 				</div>
-				<p class="help-text">
-					この値以上の画面幅で中央揃えのスタイルが適用されます。<br />
-					（デフォルト値: 1280px）
-				</p>
+				<p class="help-text" data-i18n="screen_width_help"></p>
 			</div>
 
 			<div class="form-group">
-				<h2>追加スタイル調整</h2>
-				<label for="css-editor">カスタムCSS:</label>
+				<h2 data-i18n="additional_style_settings"></h2>
+				<label for="css-editor" data-i18n="custom_css"></label>
 				<textarea id="css-editor"></textarea>
-				<p class="help-text">保存ボタンをクリックすると、入力したCSSがGoogle検索結果ページに追加適用されます。</p>
+				<p class="help-text" data-i18n="custom_css_help"></p>
 				<div class="button-group">
-					<button id="reset-button">編集内容を破棄</button>
-					<button id="save-button">保存</button>
+					<button id="reset-button" data-i18n="discard_changes"></button>
+					<button id="save-button" data-i18n="save"></button>
 				</div>
 			</div>
 		</div>
@@ -68,15 +55,16 @@
 		<!-- リセット確認モーダル -->
 		<div id="reset-modal" class="modal">
 			<div class="modal-content">
-				<h2 class="modal-title">リセットの確認</h2>
-				<p class="modal-message">カスタムCSSを編集前の状態に戻しますか？</p>
+				<h2 class="modal-title" data-i18n="reset_confirmation"></h2>
+				<p class="modal-message" data-i18n="reset_confirmation_message"></p>
 				<div class="modal-buttons">
-					<button class="modal-button cancel" id="cancel-reset">キャンセル</button>
-					<button class="modal-button confirm" id="confirm-reset">リセット</button>
+					<button class="modal-button cancel" id="cancel-reset" data-i18n="cancel"></button>
+					<button class="modal-button confirm" id="confirm-reset" data-i18n="reset"></button>
 				</div>
 			</div>
 		</div>
 
 		<script src="options.js"></script>
+		<script src="../utils/i18n-helper.js"></script>
 	</body>
 </html>

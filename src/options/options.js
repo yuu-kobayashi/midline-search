@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const confirmResetButton = document.getElementById("confirm-reset");
 	const originalCSS = { value: "" };
 
-	// 保存されたCSSとブレークポイントを読み込む
+	// Load saved CSS and breakpoint
 	chrome.storage.local.get(["customCSS", "breakpoint"], (result) => {
 		if (result.customCSS) {
 			cssEditor.value = result.customCSS;
@@ -17,18 +17,18 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
-	// ブレークポイントの保存
+	// Save breakpoint
 	document.getElementById("save-breakpoint").addEventListener("click", () => {
 		const breakpoint = parseInt(breakpointInput.value);
 		if (breakpoint >= 320 && breakpoint <= 2560) {
 			chrome.storage.local.set({ breakpoint: breakpoint }, () => {
-				// 保存完了の通知
+				// Show save completion notification
 				const saveButton = document.getElementById("save-breakpoint");
 				const originalText = saveButton.textContent;
 				saveButton.textContent = "保存しました！";
 				saveButton.style.backgroundColor = "#34a853";
 
-				// 2秒後に元の状態に戻す
+				// Restore original state after 2 seconds
 				setTimeout(() => {
 					saveButton.textContent = originalText;
 					saveButton.style.backgroundColor = "#1a73e8";
@@ -37,18 +37,18 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
-	// 保存ボタンのクリックイベント
+	// Save button click event
 	document.getElementById("save-button").addEventListener("click", () => {
 		const css = cssEditor.value;
 		chrome.storage.local.set({ customCSS: css }, () => {
 			originalCSS.value = css;
-			// 保存完了の通知
+			// Show save completion notification
 			const saveButton = document.getElementById("save-button");
 			const originalText = saveButton.textContent;
 			saveButton.textContent = "保存しました！";
 			saveButton.style.backgroundColor = "#34a853";
 
-			// 2秒後に元の状態に戻す
+			// Restore original state after 2 seconds
 			setTimeout(() => {
 				saveButton.textContent = originalText;
 				saveButton.style.backgroundColor = "#1a73e8";
@@ -56,24 +56,24 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-	// リセットボタンのクリックイベント
+	// Reset button click event
 	document.getElementById("reset-button").addEventListener("click", () => {
 		resetModal.style.display = "block";
 	});
 
-	// キャンセルボタンのクリックイベント
+	// Cancel button click event
 	cancelResetButton.addEventListener("click", () => {
 		resetModal.style.display = "none";
 	});
 
-	// 確認ボタンのクリックイベント
+	// Confirm button click event
 	confirmResetButton.addEventListener("click", () => {
 		cssEditor.value = originalCSS.value;
 		chrome.storage.local.set({ customCSS: originalCSS.value });
 		resetModal.style.display = "none";
 	});
 
-	// モーダル外クリックで閉じる
+	// Close modal when clicking outside
 	resetModal.addEventListener("click", (e) => {
 		if (e.target === resetModal) {
 			resetModal.style.display = "none";

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,9 +7,7 @@
 	</head>
 	<body>
 		<div class="container">
-			<div class="title">
-				Midline Search
-			</div>
+			<div class="title" data-i18n="ext_name"></div>
 			<div class="ui-wrapper">
 				<div class="toggle-container">
 					<label class="switch">
@@ -18,12 +16,13 @@
 					</label>
 				</div>
 				<div class="menu-container">
-					<button type="button" id="menu-icon" aria-label="設定を開く">
-						<img src="../icons/menu-icon.svg" alt="メニュー" class="menu-icon" />
+					<button type="button" id="menu-icon" aria-label="setting">
+						<img src="../icons/menu-icon.svg" alt="" class="menu-icon" />
 					</button>
 				</div>
 			</div>
 		</div>
 		<script src="popup.js"></script>
+		<script src="../utils/i18n-helper.js"></script>
 	</body>
 </html>

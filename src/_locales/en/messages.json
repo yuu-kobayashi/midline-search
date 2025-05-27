@@ -1,0 +1,62 @@
+{
+  "ext_name": {
+    "message": "Midline Search"
+  },
+  "ext_desc": {
+    "message": "A Chrome extension that changes the layout of Google search results to be center-aligned."
+  },
+  "settings_title": {
+    "message": "Midline Search Settings"
+  },
+  "settings_desc": {
+    "message": "A Chrome extension that changes the layout of Google search results to be center-aligned."
+  },
+  "settings_desc2": {
+    "message": "On this page, you can set the base screen width (px) and edit custom CSS."
+  },
+  "screen_width_settings": {
+    "message": "Screen Width Settings"
+  },
+  "media_query_start": {
+    "message": "Media Query Start Position (px):"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "screen_width_help": {
+    "message": "Center-aligned styles will be applied when the screen width is greater than or equal to this value.\n(Default: 1280px)"
+  },
+  "additional_style_settings": {
+    "message": "Additional Style Settings"
+  },
+  "custom_css": {
+    "message": "Custom CSS:"
+  },
+  "custom_css_help": {
+    "message": "Click the save button to apply the entered CSS to the Google search results page."
+  },
+  "discard_changes": {
+    "message": "Discard Changes"
+  },
+  "reset_confirmation": {
+    "message": "Reset Confirmation"
+  },
+  "reset_confirmation_message": {
+    "message": "Do you want to reset the custom CSS to its previous state?"
+  },
+  "cancel": {
+    "message": "Cancel"
+  },
+  "reset": {
+    "message": "Reset"
+  },
+  "changelog": {
+    "message": "Changelog"
+  },
+  "report_bug": {
+    "message": "Report Bug"
+  },
+  "donate": {
+    "message": "Donate"
+  }
+} 

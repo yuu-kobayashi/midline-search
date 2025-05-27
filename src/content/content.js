@@ -1,7 +1,7 @@
-// 状態管理のための定数と変数
+// Constants and variables for state management
 const DEFAULT_BREAKPOINT = 1280;
 
-// 状態管理オブジェクト
+// State management object
 const state = {
 	isCSSEnabled: true,
 	styleElement: null,
@@ -19,7 +19,7 @@ const state = {
 	},
 };
 
-// 初期状態の読み込み
+// Load initial state
 const initializeState = () => {
 	chrome.storage.local.get(["cssEnabled", "breakpoint"], (result) => {
 		state.setCSSEnabled(result.cssEnabled ?? true);
@@ -27,14 +27,14 @@ const initializeState = () => {
 	});
 };
 
-// メッセージリスナーの設定
+// Set up message listener
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.action === "toggleCSS") {
 		state.setCSSEnabled(request.enabled);
 	}
 });
 
-// CSSの適用
+// Apply CSS
 const applyCSS = () => {
 	try {
 		removeCSS();
@@ -45,7 +45,7 @@ const applyCSS = () => {
 	}
 };
 
-// スタイル要素の注入
+// Inject style element
 const injectStyleElement = () => {
 	state.styleElement = document.createElement("link");
 	state.styleElement.id = "midline-search-css";
@@ -54,7 +54,7 @@ const injectStyleElement = () => {
 	document.head.appendChild(state.styleElement);
 };
 
-// メディアクエリの設定
+// Set up media query
 const setupMediaQuery = () => {
 	if (state.mediaQueryList) {
 		state.mediaQueryList.removeEventListener("change", state.mediaQueryList._handler);
@@ -66,11 +66,11 @@ const setupMediaQuery = () => {
 	};
 	state.mediaQueryList._handler = handler;
 	state.mediaQueryList.addEventListener("change", handler);
-	// 初期状態の適用
+	// Apply initial state
 	document.documentElement.classList.toggle("midline-search-wide", state.mediaQueryList.matches);
 };
 
-// CSSの削除
+// Remove CSS
 const removeCSS = () => {
 	try {
 		const existingStyle = document.getElementById("midline-search-css");
@@ -92,7 +92,7 @@ const removeCSS = () => {
 	}
 };
 
-// カスタムCSSの適用
+// Apply custom CSS
 const applyCustomCSS = (css) => {
 	try {
 		let customStyle = document.getElementById("midline-search-custom-css");
@@ -107,21 +107,21 @@ const applyCustomCSS = (css) => {
 	}
 };
 
-// ストレージの監視と初期化
+// Set up storage listeners and initialization
 const setupStorageListeners = () => {
 	if (!chrome.storage.local) {
 		console.error("Chrome storage API is not available");
 		return;
 	}
 
-	// 初期カスタムCSSの読み込み
+	// Load initial custom CSS
 	chrome.storage.local.get(["customCSS"], (result) => {
 		if (result.customCSS) {
 			applyCustomCSS(result.customCSS);
 		}
 	});
 
-	// ストレージ変更の監視
+	// Monitor storage changes
 	chrome.storage.onChanged.addListener((changes, namespace) => {
 		if (namespace !== "local") return;
 
@@ -134,6 +134,6 @@ const setupStorageListeners = () => {
 	});
 };
 
-// 初期化
+// Initialize
 initializeState();
 setupStorageListeners();
