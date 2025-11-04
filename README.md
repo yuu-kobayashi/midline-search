@@ -48,7 +48,26 @@ Once installed, the extension automatically applies center-aligned styles to Goo
 
 ## Supported Pages
 
-- All Google search pages across country-specific domains (e.g., `https://www.google.com/search*`, `https://www.google.co.jp/search*`, `https://www.google.fr/search*`, etc.)
+This extension supports Google search pages on the following country-specific domains:
+
+- `https://www.google.com/search*` (US/International)
+- `https://www.google.co.jp/search*` (Japan)
+- `https://www.google.fr/search*` (France)
+- `https://www.google.de/search*` (Germany)
+- `https://www.google.co.uk/search*` (United Kingdom)
+- `https://www.google.com.au/search*` (Australia)
+- `https://www.google.ca/search*` (Canada)
+- `https://www.google.it/search*` (Italy)
+- `https://www.google.es/search*` (Spain)
+- `https://www.google.com.br/search*` (Brazil)
+- `https://www.google.co.in/search*` (India)
+- `https://www.google.com.mx/search*` (Mexico)
+- `https://www.google.nl/search*` (Netherlands)
+- `https://www.google.pl/search*` (Poland)
+- `https://www.google.ru/search*` (Russia)
+- `https://www.google.com.tr/search*` (Turkey)
+- `https://www.google.com.tw/search*` (Taiwan)
+- `https://www.google.co.kr/search*` (South Korea)
 
 ## Permissions
 
