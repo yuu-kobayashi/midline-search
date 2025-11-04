@@ -1,39 +1,52 @@
 ---
-name: 🐛 バグ報告 / Bug Report
-about: Google検索レイアウト調整拡張の不具合報告 / Report a layout bug with the Google Search Centering Extension
-title: "[BUG] バグの内容 / Describe the issue"
+name: 🐛 Bug Report
+about: Report a bug or layout issue with the Midline Search extension
+title: "[BUG] "
 labels: bug
 assignees: ''
 ---
 
-## 📄 1. どんな問題ですか？  
-**What’s wrong?**
+## 📄 What's wrong?
 
-見た目がおかしい・中央揃えされないなど、問題の内容を簡単に教えてください。  
-Briefly describe what looks wrong (e.g. not centered, broken layout, etc.)
-
----
-
-## 🌐 2. どんなページで起きましたか？  
-**Where did it happen?**
-
-検索ワードや、タブ（画像・ニュースなど）を教えてください。  
-Tell us the search keyword or which tab it occurred in (e.g. images, news, videos, etc.)
+Please describe the issue you're experiencing. For example:
+- Layout is not centered
+- Styles are not applied
+- Broken layout or visual glitches
+- Extension not working on a specific page
 
 ---
 
-## 💻 3. 使用環境（わかる範囲で）  
-**Your Environment (if known)**
+## 🌐 Where did it happen?
 
-- OS（例: Windows 11 / macOS 13）  
-- ブラウザ（例: Chrome 125）  
-- 拡張のバージョン（オプション）  
-(Optional) OS, browser, and extension version.
+Please provide the following information:
+- Search keyword used (if applicable)
+- Google domain (e.g., google.com, google.co.jp, google.fr)
+- Which tab/type of search (e.g., All, Images, News, Videos, etc.)
+- Specific URL (if possible)
 
 ---
 
-## 📷 4. スクリーンショット（任意）  
-**Screenshot (optional)**
+## 💻 Your Environment
 
-見た目の問題がわかる画像があれば貼ってください。  
-Attach a screenshot if you can—it really helps!
+Please provide your environment details (if known):
+
+- **OS**: (e.g., Windows 11, macOS 14, Linux)
+- **Browser**: (e.g., Chrome 125, Edge 125)
+- **Extension Version**: (optional, can be found in `chrome://extensions/`)
+- **Screen Resolution**: (optional, e.g., 1920x1080)
+
+---
+
+## 📷 Screenshot (optional)
+
+If possible, please attach a screenshot showing the issue. This helps us understand the problem better.
+
+---
+
+## 🔧 Additional Information
+
+Any other details that might be helpful:
+- Steps to reproduce the issue
+- Expected behavior
+- Actual behavior
+- Any error messages in the browser console (F12 → Console tab)

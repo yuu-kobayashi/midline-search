@@ -1,62 +1,65 @@
 {
-  "ext_name": {
-    "message": "Midline Search"
-  },
-  "ext_desc": {
-    "message": "Google検索結果ページのレイアウトを中央揃えに変更するChrome拡張機能です。"
-  },
-  "settings_title": {
-    "message": "Midline Search 設定"
-  },
-  "settings_desc": {
-    "message": "Google検索結果ページのレイアウトを中央揃えに変更するChrome拡張機能です。"
-  },
-  "settings_desc2": {
-    "message": "このページでは、基準となる画面幅（px）の設定とカスタムCSSの編集を行えます。"
-  },
-  "screen_width_settings": {
-    "message": "画面幅設定"
-  },
-  "media_query_start": {
-    "message": "メディアクエリの開始位置（px）:"
-  },
-  "save": {
-    "message": "保存"
-  },
-  "screen_width_help": {
-    "message": "この値以上の画面幅で中央揃えのスタイルが適用されます。\n（デフォルト値: 1280px）"
-  },
-  "additional_style_settings": {
-    "message": "追加スタイル調整"
-  },
-  "custom_css": {
-    "message": "カスタムCSS:"
-  },
-  "custom_css_help": {
-    "message": "保存ボタンをクリックすると、入力したCSSがGoogle検索結果ページに追加適用されます。"
-  },
-  "discard_changes": {
-    "message": "編集内容を破棄"
-  },
-  "reset_confirmation": {
-    "message": "リセットの確認"
-  },
-  "reset_confirmation_message": {
-    "message": "カスタムCSSを編集前の状態に戻しますか？"
-  },
-  "cancel": {
-    "message": "キャンセル"
-  },
-  "reset": {
-    "message": "リセット"
-  },
-  "changelog": {
-    "message": "更新履歴"
-  },
-  "report_bug": {
-    "message": "バグ報告"
-  },
-  "donate": {
-    "message": "寄付"
-  }
+    "ext_name": {
+        "message": "Midline Search"
+    },
+    "ext_desc": {
+        "message": "Google検索結果ページのレイアウトを中央揃えに変更するChrome拡張機能です。"
+    },
+    "settings_title": {
+        "message": "Midline Search 設定"
+    },
+    "settings_desc": {
+        "message": "Google検索結果ページのレイアウトを中央揃えに変更するChrome拡張機能です。"
+    },
+    "settings_desc2": {
+        "message": "このページでは、基準となる画面幅（px）の設定とカスタムCSSの編集を行えます。"
+    },
+    "screen_width_settings": {
+        "message": "画面幅設定"
+    },
+    "media_query_start": {
+        "message": "メディアクエリの開始位置（px）:"
+    },
+    "save": {
+        "message": "保存"
+    },
+    "screen_width_help": {
+        "message": "この値以上の画面幅で中央揃えのスタイルが適用されます。\n（デフォルト値: 1280px）"
+    },
+    "additional_style_settings": {
+        "message": "追加スタイル調整"
+    },
+    "custom_css": {
+        "message": "カスタムCSS:"
+    },
+    "custom_css_help": {
+        "message": "保存ボタンをクリックすると、入力したCSSがGoogle検索結果ページに追加適用されます。"
+    },
+    "discard_changes": {
+        "message": "編集内容を破棄"
+    },
+    "reset_confirmation": {
+        "message": "リセットの確認"
+    },
+    "reset_confirmation_message": {
+        "message": "カスタムCSSを編集前の状態に戻しますか？"
+    },
+    "cancel": {
+        "message": "キャンセル"
+    },
+    "reset": {
+        "message": "リセット"
+    },
+    "changelog": {
+        "message": "更新履歴"
+    },
+    "report_bug": {
+        "message": "バグ報告"
+    },
+    "send_tip": {
+        "message": "支援する"
+    },
+    "save_completed": {
+        "message": "保存しました！"
+    }
 } 

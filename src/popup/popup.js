@@ -14,13 +14,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		// Save state
 		chrome.storage.local.set({ cssEnabled: isEnabled });
 
-		// Send message to active tab
+		// Send message to active tab (only if it's a Google search page)
 		chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-			if (tabs[0]) {
-				chrome.tabs.sendMessage(tabs[0].id, {
-					action: "toggleCSS",
-					enabled: isEnabled,
-				});
+			if (tabs[0] && tabs[0].url) {
+				const url = tabs[0].url;
+
+				if (url.match(/^https:\/\/www\.google\.[^/]+\/search/)) {
+					chrome.tabs.sendMessage(tabs[0].id, {
+						action: "toggleCSS",
+						enabled: isEnabled,
+					});
+				}
 			}
 		});
 	});

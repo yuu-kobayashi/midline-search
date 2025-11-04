@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				// Show save completion notification
 				const saveButton = document.getElementById("save-breakpoint");
 				const originalText = saveButton.textContent;
-				saveButton.textContent = "保存しました！";
+				saveButton.textContent = chrome.i18n.getMessage("save_completed");
 				saveButton.style.backgroundColor = "#34a853";
 
 				// Restore original state after 2 seconds
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			// Show save completion notification
 			const saveButton = document.getElementById("save-button");
 			const originalText = saveButton.textContent;
-			saveButton.textContent = "保存しました！";
+			saveButton.textContent = chrome.i18n.getMessage("save_completed");
 			saveButton.style.backgroundColor = "#34a853";
 
 			// Restore original state after 2 seconds
