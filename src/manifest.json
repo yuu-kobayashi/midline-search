@@ -15,7 +15,26 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://www.google.*/search*"],
+            "matches": [
+                "https://www.google.com/search*",
+                "https://www.google.co.jp/search*",
+                "https://www.google.fr/search*",
+                "https://www.google.de/search*",
+                "https://www.google.co.uk/search*",
+                "https://www.google.com.au/search*",
+                "https://www.google.ca/search*",
+                "https://www.google.it/search*",
+                "https://www.google.es/search*",
+                "https://www.google.com.br/search*",
+                "https://www.google.co.in/search*",
+                "https://www.google.com.mx/search*",
+                "https://www.google.nl/search*",
+                "https://www.google.pl/search*",
+                "https://www.google.ru/search*",
+                "https://www.google.com.tr/search*",
+                "https://www.google.com.tw/search*",
+                "https://www.google.co.kr/search*"
+            ],
             "js": ["content/content.js"],
             "run_at": "document_start"
         }
@@ -23,7 +42,26 @@
     "web_accessible_resources": [
         {
             "resources": ["content/search-page.css"],
-            "matches": ["https://www.google.*/*"]
+            "matches": [
+                "https://www.google.com/*",
+                "https://www.google.co.jp/*",
+                "https://www.google.fr/*",
+                "https://www.google.de/*",
+                "https://www.google.co.uk/*",
+                "https://www.google.com.au/*",
+                "https://www.google.ca/*",
+                "https://www.google.it/*",
+                "https://www.google.es/*",
+                "https://www.google.com.br/*",
+                "https://www.google.co.in/*",
+                "https://www.google.com.mx/*",
+                "https://www.google.nl/*",
+                "https://www.google.pl/*",
+                "https://www.google.ru/*",
+                "https://www.google.com.tr/*",
+                "https://www.google.com.tw/*",
+                "https://www.google.co.kr/*"
+            ]
         }
     ],
     "icons": {
