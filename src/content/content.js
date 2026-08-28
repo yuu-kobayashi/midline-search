@@ -1,6 +1,31 @@
 // Constants and variables for state management
 const DEFAULT_BREAKPOINT = 1280;
 
+// Search tab detection: maps URL params to stable class names (e.g. midline-search-tab-images)
+const TAB_CLASS_PREFIX = "midline-search-tab-";
+
+// udm values from Google search tab links
+const UDM_MAP = {
+	"2": "images",
+	"7": "videos",
+	"12": "news",
+	"28": "shopping",
+	"36": "books",
+	"39": "short-videos",
+	"50": "ai-mode",
+	"14": "web",
+	web: "web",
+};
+
+// Legacy tbm values (still used by some tabs, e.g. News)
+const TBM_MAP = {
+	isch: "images",
+	vid: "videos",
+	nws: "news",
+	shop: "shopping",
+	bks: "books",
+};
+
 // State management object
 const state = {
 	isCSSEnabled: true,
@@ -17,6 +42,47 @@ const state = {
 			setupMediaQuery();
 		}
 	},
+};
+
+// Resolve current search tab from URL query parameters
+const getSearchTabType = () => {
+	const params = new URLSearchParams(location.search);
+	const udm = params.get("udm");
+	const tbm = params.get("tbm");
+
+	if (udm && UDM_MAP[udm]) return UDM_MAP[udm];
+	if (tbm && TBM_MAP[tbm]) return TBM_MAP[tbm];
+	return "all";
+};
+
+// Apply tab-specific class to <html> for CSS scoping
+const updateTabClass = () => {
+	const tab = getSearchTabType();
+	document.documentElement.classList.forEach((cls) => {
+		if (cls.startsWith(TAB_CLASS_PREFIX)) {
+			document.documentElement.classList.remove(cls);
+		}
+	});
+	document.documentElement.classList.add(`${TAB_CLASS_PREFIX}${tab}`);
+};
+
+// Re-apply tab class on SPA tab switches (Google updates URL without full reload)
+const setupTabClassMonitoring = () => {
+	updateTabClass();
+
+	window.addEventListener("popstate", updateTabClass);
+
+	const wrapHistoryMethod = (method) => {
+		const original = history[method].bind(history);
+		history[method] = (...args) => {
+			const result = original(...args);
+			updateTabClass();
+			return result;
+		};
+	};
+
+	wrapHistoryMethod("pushState");
+	wrapHistoryMethod("replaceState");
 };
 
 // Load initial state
@@ -137,3 +203,4 @@ const setupStorageListeners = () => {
 // Initialize
 initializeState();
 setupStorageListeners();
+setupTabClassMonitoring();
