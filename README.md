@@ -5,9 +5,9 @@ A Chrome extension that changes the layout of Google search results to be center
 ## Features
 
 - **Center-Aligned Layout**: Automatically centers Google search results when viewing on wide screens
-- **Configurable Breakpoint**: Set the minimum screen width (in pixels) at which the center-aligned styles are applied (default: 1280px)
-- **Custom CSS Editor**: Add your own CSS rules to further customize the search results page appearance
-- **Easy Toggle**: Quickly enable or disable the extension styles via the popup menu
+- **Configurable Breakpoint**: Set the minimum screen width (in pixels) at which the center-aligned styles are applied (default: 1280px), shared by all search tabs or set per tab
+- **Custom CSS Editor**: Add your own CSS rules to further customize the search results page appearance, either for every search tab or for one tab only
+- **Easy Toggle**: Quickly enable or disable the extension via the popup menu, on every open search page at once
 - **Real-Time Updates**: Changes to settings are applied immediately without requiring a page refresh
 
 ## Installation
@@ -29,22 +29,30 @@ Once installed, the extension automatically applies center-aligned styles to Goo
 1. Click the extension icon in your Chrome toolbar
 2. Use the toggle switch to enable or disable the styles
 
+Turning it off removes both the center-aligned layout and your custom CSS, so the page is left as Google renders it. Every open Google search page follows the switch, not just the one in front.
+
 ### Configure Settings
 
 1. Click the extension icon and then click the menu icon (☰) to open the options page
 2. Or right-click the extension icon and select "Options"
 
+#### Choosing What to Configure
+
+The switcher at the top of the options page is split into two layers: the **All Tabs (Common)** pill, and below it an indented row of pills for the individual Google search tabs (All, AI Mode, Images, Videos, Short videos, News, Shopping, Books, Web). The page opens on the shared settings; pick a search tab to give it its own screen width and CSS on top of the shared ones. A dot on a pill means that tab has edits you have not saved yet.
+
 #### Screen Width Settings
 
 - Set the **Media Query Start Position** (breakpoint) in pixels
 - The center-aligned styles will be applied when the screen width is greater than or equal to this value (default: 1280px).
+- On a single search tab, uncheck **Use common setting** to give that tab its own breakpoint. While it is checked, the common value is used.
 
 #### Custom CSS
 
 - Enter your custom CSS rules in the editor
 - Click "Save" to apply the changes
-- The CSS will be applied to the Google search results page
-- Use "Discard Changes" to reset to the previous state
+- CSS entered under **All Tabs (Common)** applies to every Google search tab; CSS entered under a single tab applies only to that tab
+- Tab CSS is injected after the common CSS, so it overrides common rules of the same specificity
+- Use "Discard Changes" to reset the CSS of the tab you are editing to the previous state
 
 ## Supported Pages
 
@@ -73,9 +81,7 @@ This extension supports Google search pages on the following country-specific do
 
 This extension requires the following permissions:
 
-- **storage**: To save your settings (breakpoint and custom CSS)
-- **activeTab**: To apply styles to the current Google search page
-- **tabs**: To send messages to the active tab when toggling styles
+- **storage**: To save your settings, and to share them with every open Google search page
 
 ## Browser Compatibility
 
@@ -94,7 +100,7 @@ midline-search/
 │   ├── icons/             # Extension icons
 │   ├── options/           # Options page
 │   ├── popup/             # Popup interface
-│   ├── utils/             # Utility functions
+│   ├── utils/             # Definitions shared by the content script, options page and popup
 │   └── manifest.json      # Extension manifest
 ├── CHANGELOG.md
 └── README.md

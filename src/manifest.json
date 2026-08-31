@@ -1,10 +1,10 @@
 {
     "manifest_version": 3,
     "name": "__MSG_ext_name__",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "__MSG_ext_desc__",
     "default_locale": "en",
-    "permissions": ["storage", "activeTab", "tabs"],
+    "permissions": ["storage"],
     "action": {
         "default_popup": "popup/popup.html",
         "default_icon": {
@@ -35,7 +35,7 @@
                 "https://www.google.com.tw/search*",
                 "https://www.google.co.kr/search*"
             ],
-            "js": ["content/content.js"],
+            "js": ["utils/settings.js", "utils/search-tabs.js", "content/content.js"],
             "run_at": "document_start"
         }
     ],

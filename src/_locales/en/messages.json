@@ -12,7 +12,7 @@
         "message": "A Chrome extension that changes the layout of Google search results to be center-aligned."
     },
     "settings_desc2": {
-        "message": "On this page, you can set the base screen width (px) and edit custom CSS."
+        "message": "On this page, you can set the base screen width (px) and edit custom CSS. Use the tabs below to configure settings shared by all tabs, or settings that apply to a single Google search tab only."
     },
     "screen_width_settings": {
         "message": "Screen Width Settings"
@@ -24,7 +24,13 @@
         "message": "Save"
     },
     "screen_width_help": {
-        "message": "Center-aligned styles will be applied when the screen width is greater than or equal to this value.\n(Default: 1280px)"
+        "message": "Center-aligned styles will be applied when the screen width is greater than or equal to this value.\nThis value is used by every search tab that does not define its own.\n(Default: 1280px)"
+    },
+    "tab_screen_width_help": {
+        "message": "Uncheck \"Use common setting\" to apply a different screen width to this search tab only.\nWhile it is checked, the common setting is used."
+    },
+    "use_common_breakpoint": {
+        "message": "Use common setting"
     },
     "additional_style_settings": {
         "message": "Additional Style Settings"
@@ -32,8 +38,50 @@
     "custom_css": {
         "message": "Custom CSS:"
     },
-    "custom_css_help": {
-        "message": "Click the save button to apply the entered CSS to the Google search results page."
+    "common_css_help": {
+        "message": "Click the save button to apply the entered CSS to every Google search tab."
+    },
+    "tab_css_help": {
+        "message": "Click the save button to apply the entered CSS to this Google search tab only.\nWhen the specificity is the same as the shared styles for all tabs, these rules take precedence."
+    },
+    "target_tab": {
+        "message": "Tab to configure"
+    },
+    "common_layer_label": {
+        "message": "Applied to all tabs"
+    },
+    "per_tab_layer_label": {
+        "message": "Applied to one search tab only"
+    },
+    "tab_common": {
+        "message": "All Tabs (Common)"
+    },
+    "tab_all": {
+        "message": "All"
+    },
+    "tab_ai_mode": {
+        "message": "AI Mode"
+    },
+    "tab_images": {
+        "message": "Images"
+    },
+    "tab_videos": {
+        "message": "Videos"
+    },
+    "tab_short_videos": {
+        "message": "Short videos"
+    },
+    "tab_news": {
+        "message": "News"
+    },
+    "tab_shopping": {
+        "message": "Shopping"
+    },
+    "tab_books": {
+        "message": "Books"
+    },
+    "tab_web": {
+        "message": "Web"
     },
     "discard_changes": {
         "message": "Discard Changes"
@@ -42,7 +90,7 @@
         "message": "Reset Confirmation"
     },
     "reset_confirmation_message": {
-        "message": "Do you want to reset the custom CSS to its previous state?"
+        "message": "Do you want to reset the custom CSS of the tab you are editing to its previous state?"
     },
     "cancel": {
         "message": "Cancel"
@@ -62,4 +110,4 @@
     "save_completed": {
         "message": "Saved!"
     }
-} 
+}

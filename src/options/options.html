@@ -26,26 +26,8 @@
 			<p data-i18n="settings_desc2"></p>
 		</div>
 		<div class="container">
-			<div class="form-group">
-				<h2 data-i18n="screen_width_settings"></h2>
-				<label for="breakpoint-input" data-i18n="media_query_start"></label>
-				<div class="input-group">
-					<input type="number" id="breakpoint-input" min="320" max="2560" value="1280" />
-					<button id="save-breakpoint" data-i18n="save"></button>
-				</div>
-				<p class="help-text" data-i18n="screen_width_help"></p>
-			</div>
-
-			<div class="form-group">
-				<h2 data-i18n="additional_style_settings"></h2>
-				<label for="css-editor" data-i18n="custom_css"></label>
-				<textarea id="css-editor"></textarea>
-				<p class="help-text" data-i18n="custom_css_help"></p>
-				<div class="button-group">
-					<button id="reset-button" data-i18n="discard_changes"></button>
-					<button id="save-button" data-i18n="save"></button>
-				</div>
-			</div>
+			<div class="tab-list" id="settings-tabs" role="tablist"></div>
+			<div id="settings-panels"></div>
 		</div>
 
 		<div class="footer">
@@ -64,7 +46,9 @@
 			</div>
 		</div>
 
-		<script src="options.js"></script>
+		<script src="../utils/settings.js"></script>
+		<script src="../utils/search-tabs.js"></script>
 		<script src="../utils/i18n-helper.js"></script>
+		<script src="options.js"></script>
 	</body>
 </html>

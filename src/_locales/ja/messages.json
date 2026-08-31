@@ -12,7 +12,7 @@
         "message": "Google検索結果ページのレイアウトを中央揃えに変更するChrome拡張機能です。"
     },
     "settings_desc2": {
-        "message": "このページでは、基準となる画面幅（px）の設定とカスタムCSSの編集を行えます。"
+        "message": "このページでは、基準となる画面幅（px）の設定とカスタムCSSの編集を行えます。下のタブで、全タブ共通の設定と、Google検索の各タブだけに適用する設定を切り替えられます。"
     },
     "screen_width_settings": {
         "message": "画面幅設定"
@@ -24,7 +24,13 @@
         "message": "保存"
     },
     "screen_width_help": {
-        "message": "この値以上の画面幅で中央揃えのスタイルが適用されます。\n（デフォルト値: 1280px）"
+        "message": "この値以上の画面幅で中央揃えのスタイルが適用されます。\n個別に設定していない検索タブでは、この値が使われます。\n（デフォルト値: 1280px）"
+    },
+    "tab_screen_width_help": {
+        "message": "「共通設定を使う」のチェックを外すと、この検索タブだけ別の画面幅を指定できます。\nチェックしている間は共通設定の値が使われます。"
+    },
+    "use_common_breakpoint": {
+        "message": "共通設定を使う"
     },
     "additional_style_settings": {
         "message": "追加スタイル調整"
@@ -32,8 +38,50 @@
     "custom_css": {
         "message": "カスタムCSS:"
     },
-    "custom_css_help": {
-        "message": "保存ボタンをクリックすると、入力したCSSがGoogle検索結果ページに追加適用されます。"
+    "common_css_help": {
+        "message": "保存ボタンをクリックすると、入力したCSSがGoogle検索のすべてのタブに追加適用されます。"
+    },
+    "tab_css_help": {
+        "message": "保存ボタンをクリックすると、入力したCSSがこの検索タブでのみ追加適用されます。\n全タブ共通のスタイル適用先と詳細度が同じ場合はこちらが優先されます。"
+    },
+    "target_tab": {
+        "message": "設定するタブ"
+    },
+    "common_layer_label": {
+        "message": "すべてのタブに適用"
+    },
+    "per_tab_layer_label": {
+        "message": "特定の検索タブにのみ追加適用"
+    },
+    "tab_common": {
+        "message": "全タブ共通"
+    },
+    "tab_all": {
+        "message": "すべて"
+    },
+    "tab_ai_mode": {
+        "message": "AIモード"
+    },
+    "tab_images": {
+        "message": "画像"
+    },
+    "tab_videos": {
+        "message": "動画"
+    },
+    "tab_short_videos": {
+        "message": "ショート動画"
+    },
+    "tab_news": {
+        "message": "ニュース"
+    },
+    "tab_shopping": {
+        "message": "ショッピング"
+    },
+    "tab_books": {
+        "message": "書籍"
+    },
+    "tab_web": {
+        "message": "ウェブ"
     },
     "discard_changes": {
         "message": "編集内容を破棄"
@@ -42,7 +90,7 @@
         "message": "リセットの確認"
     },
     "reset_confirmation_message": {
-        "message": "カスタムCSSを編集前の状態に戻しますか？"
+        "message": "編集中のタブのカスタムCSSを編集前の状態に戻しますか？"
     },
     "cancel": {
         "message": "キャンセル"
@@ -62,4 +110,4 @@
     "save_completed": {
         "message": "保存しました！"
     }
-} 
+}

@@ -1,13 +1,18 @@
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const msg = chrome.i18n.getMessage(key);
-    if (msg) {
-      if (el.tagName === 'TITLE') {
-        document.title = msg;
-      } else {
-        el.textContent = msg;
-      }
-    }
-  });
-}); 
+// Replace the contents of every [data-i18n] element under root with its localized
+// message. Exposed rather than only run on load, so a page that builds markup of
+// its own can localize what it built without depending on script order.
+const applyI18n = (root = document) => {
+	root.querySelectorAll("[data-i18n]").forEach((element) => {
+		const message = chrome.i18n.getMessage(element.dataset.i18n);
+		if (!message) return;
+
+		if (element.tagName === "TITLE") {
+			document.title = message;
+		} else {
+			element.textContent = message;
+		}
+	});
+};
+
+// The markup present in the HTML file itself
+document.addEventListener("DOMContentLoaded", () => applyI18n());

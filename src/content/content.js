@@ -1,206 +1,204 @@
-// Constants and variables for state management
-const DEFAULT_BREAKPOINT = 1280;
+// Stored settings (STORAGE_KEYS, DEFAULT_BREAKPOINT, resolveBreakpoint) come from
+// utils/settings.js, tab definitions (TAB_CLASS_PREFIX, DEFAULT_TAB_KEY,
+// getSearchTabType) from utils/search-tabs.js.
 
-// Search tab detection: maps URL params to stable class names (e.g. midline-search-tab-images)
-const TAB_CLASS_PREFIX = "midline-search-tab-";
+// Style element ids. The base stylesheet is injected first and the two user
+// elements after it, common before tab-specific, so at equal specificity tab CSS
+// beats common CSS and both beat the base stylesheet.
+const BASE_CSS_ID = "midline-search-css";
+const COMMON_CSS_ID = "midline-search-custom-css";
+const TAB_CSS_ID = "midline-search-tab-custom-css";
 
-// udm values from Google search tab links
-const UDM_MAP = {
-	"2": "images",
-	"7": "videos",
-	"12": "news",
-	"28": "shopping",
-	"36": "books",
-	"39": "short-videos",
-	"50": "ai-mode",
-	"14": "web",
-	web: "web",
-};
+// Marks <html> while the viewport is at least as wide as the effective breakpoint
+const WIDE_CLASS = "midline-search-wide";
 
-// Legacy tbm values (still used by some tabs, e.g. News)
-const TBM_MAP = {
-	isch: "images",
-	vid: "videos",
-	nws: "news",
-	shop: "shopping",
-	bks: "books",
-};
-
-// State management object
+// Everything the styles depend on. Nothing is applied until the stored settings
+// arrive, so isCSSEnabled starts false whatever the user has saved.
 const state = {
-	isCSSEnabled: true,
-	styleElement: null,
+	settingsLoaded: false,
+	isCSSEnabled: false,
 	breakpoint: DEFAULT_BREAKPOINT,
+	tabBreakpoints: {},
+	commonCSS: "",
+	tabCSS: {},
+	currentTab: DEFAULT_TAB_KEY,
 	mediaQueryList: null,
-	setCSSEnabled: (value) => {
-		state.isCSSEnabled = value;
-		state.isCSSEnabled ? applyCSS() : removeCSS();
-	},
-	setBreakpoint: (value) => {
-		state.breakpoint = value;
-		if (state.isCSSEnabled) {
-			setupMediaQuery();
-		}
-	},
 };
 
-// Resolve current search tab from URL query parameters
-const getSearchTabType = () => {
-	const params = new URLSearchParams(location.search);
-	const udm = params.get("udm");
-	const tbm = params.get("tbm");
+// ------------------------------------------------------------ base stylesheet
 
-	if (udm && UDM_MAP[udm]) return UDM_MAP[udm];
-	if (tbm && TBM_MAP[tbm]) return TBM_MAP[tbm];
-	return "all";
+const injectBaseCSS = () => {
+	if (document.getElementById(BASE_CSS_ID)) return;
+
+	const link = document.createElement("link");
+	link.id = BASE_CSS_ID;
+	link.rel = "stylesheet";
+	link.href = chrome.runtime.getURL("content/search-page.css");
+	// document.head does not exist yet at document_start
+	(document.head || document.documentElement).appendChild(link);
 };
 
-// Apply tab-specific class to <html> for CSS scoping
+const removeBaseCSS = () => {
+	document.getElementById(BASE_CSS_ID)?.remove();
+};
+
+// --------------------------------------------------------------- media query
+
+const onViewportChange = (mediaQueryList) => {
+	document.documentElement.classList.toggle(WIDE_CLASS, mediaQueryList.matches);
+};
+
+// Follow the breakpoint that applies to the tab currently open. A MediaQueryList
+// cannot be re-targeted, so a new one replaces the old whenever the width behind
+// it changes: on a settings change, and on every tab switch, since a tab can carry
+// its own breakpoint.
+const watchViewport = () => {
+	state.mediaQueryList?.removeEventListener("change", onViewportChange);
+
+	const breakpoint = resolveBreakpoint(state.tabBreakpoints[state.currentTab], state.breakpoint);
+	state.mediaQueryList = window.matchMedia(`(min-width: ${breakpoint}px)`);
+	state.mediaQueryList.addEventListener("change", onViewportChange);
+	onViewportChange(state.mediaQueryList);
+};
+
+const unwatchViewport = () => {
+	state.mediaQueryList?.removeEventListener("change", onViewportChange);
+	state.mediaQueryList = null;
+	document.documentElement.classList.remove(WIDE_CLASS);
+};
+
+// ------------------------------------------------------------------ user CSS
+
+// Both user style elements, common first so tab rules win at equal specificity.
+// Each id is checked separately so a missing element is recreated on its own; when
+// only the tab element is left, the common one is inserted before it rather than
+// appended after, which would silently invert that precedence.
+const ensureUserStyleElements = () => {
+	const parent = document.head || document.documentElement;
+	[COMMON_CSS_ID, TAB_CSS_ID].forEach((id) => {
+		if (document.getElementById(id)) return;
+
+		const element = document.createElement("style");
+		element.id = id;
+		const tabStyle = id === COMMON_CSS_ID ? document.getElementById(TAB_CSS_ID) : null;
+		tabStyle ? tabStyle.before(element) : parent.appendChild(element);
+	});
+};
+
+// The shared custom CSS plus the CSS of the search tab currently open. Runs only
+// once the stored values have arrived, so these elements are never injected ahead
+// of the base stylesheet, which would let the base rules override them.
+const applyUserCSS = () => {
+	if (!state.settingsLoaded) return;
+
+	ensureUserStyleElements();
+	// The popup switch turns the extension off as a whole, custom CSS included
+	document.getElementById(COMMON_CSS_ID).textContent = state.isCSSEnabled ? state.commonCSS : "";
+	document.getElementById(TAB_CSS_ID).textContent = state.isCSSEnabled ? (state.tabCSS[state.currentTab] ?? "") : "";
+};
+
+// ------------------------------------------------------------------- on / off
+
+const setCSSEnabled = (enabled) => {
+	state.isCSSEnabled = enabled;
+	if (enabled) {
+		injectBaseCSS();
+		watchViewport();
+	} else {
+		removeBaseCSS();
+		unwatchViewport();
+	}
+	applyUserCSS();
+};
+
+// ------------------------------------------------------------------ tab class
+
+// Scope the CSS to the tab on screen, and move the tab-specific settings with it
 const updateTabClass = () => {
 	const tab = getSearchTabType();
-	document.documentElement.classList.forEach((cls) => {
+
+	// Snapshot the list: classList is live, so removing while iterating skips entries
+	Array.from(document.documentElement.classList).forEach((cls) => {
 		if (cls.startsWith(TAB_CLASS_PREFIX)) {
 			document.documentElement.classList.remove(cls);
 		}
 	});
 	document.documentElement.classList.add(`${TAB_CLASS_PREFIX}${tab}`);
+
+	if (tab === state.currentTab) return;
+
+	// Switching tabs swaps both the tab-specific CSS and its breakpoint
+	state.currentTab = tab;
+	applyUserCSS();
+	if (state.isCSSEnabled) {
+		watchViewport();
+	}
 };
 
-// Re-apply tab class on SPA tab switches (Google updates URL without full reload)
-const setupTabClassMonitoring = () => {
+// Re-apply the tab class on the tab switches Google performs without a reload.
+// Patching history.pushState from here cannot work: a content script runs in an
+// isolated world, so the patch lands on that world's own History wrapper and never
+// sees the calls Google makes from the page. Watch the navigation instead.
+const watchTabSwitches = () => {
 	updateTabClass();
 
-	window.addEventListener("popstate", updateTabClass);
+	// A real DOM event, so it does cross worlds. Covers back/forward.
+	window.addEventListener("popstate", () => updateTabClass());
 
-	const wrapHistoryMethod = (method) => {
-		const original = history[method].bind(history);
-		history[method] = (...args) => {
-			const result = original(...args);
-			updateTabClass();
-			return result;
-		};
-	};
+	if (!window.navigation) return;
 
-	wrapHistoryMethod("pushState");
-	wrapHistoryMethod("replaceState");
+	// Only ever re-read once a navigation has been committed. Acting on the "navigate"
+	// event instead would restyle the page the user is still looking at: a tab pill is
+	// an ordinary link, so the browser keeps the old results on screen until the new
+	// page arrives, and the incoming tab's rules would visibly land on them first.
+	// Nothing is lost by waiting -- a page loaded from the network gets its class at
+	// document_start, before it paints. addEventListener ignores event types the
+	// browser does not know, so neither of these needs a feature check.
+	navigation.addEventListener("navigatesuccess", () => updateTabClass());
+	navigation.addEventListener("currententrychange", () => updateTabClass());
 };
 
-// Load initial state
-const initializeState = () => {
-	chrome.storage.local.get(["cssEnabled", "breakpoint"], (result) => {
-		state.setCSSEnabled(result.cssEnabled ?? true);
-		state.setBreakpoint(result.breakpoint ?? DEFAULT_BREAKPOINT);
+// -------------------------------------------------------------------- storage
+
+// One read for every setting, so the base stylesheet is always in place before the
+// user CSS elements are appended after it
+const loadSettings = () => {
+	chrome.storage.local.get(Object.values(STORAGE_KEYS), (result) => {
+		state.breakpoint = resolveBreakpoint(result[STORAGE_KEYS.breakpoint]);
+		state.tabBreakpoints = result[STORAGE_KEYS.tabBreakpoints] ?? {};
+		state.commonCSS = result[STORAGE_KEYS.customCSS] ?? "";
+		state.tabCSS = result[STORAGE_KEYS.tabCustomCSS] ?? {};
+		state.settingsLoaded = true;
+		setCSSEnabled(result[STORAGE_KEYS.cssEnabled] ?? true);
 	});
 };
 
-// Set up message listener
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-	if (request.action === "toggleCSS") {
-		state.setCSSEnabled(request.enabled);
-	}
-});
+// Every setting lives in storage, the popup switch included, so a change reaches
+// every open search tab rather than only the one in front of the user.
+const watchSettings = () => {
+	chrome.storage.onChanged.addListener((changes, areaName) => {
+		if (areaName !== "local" || !state.settingsLoaded) return;
 
-// Apply CSS
-const applyCSS = () => {
-	try {
-		removeCSS();
-		injectStyleElement();
-		setupMediaQuery();
-	} catch (error) {
-		console.error("Failed to apply CSS:", error);
-	}
-};
+		const { cssEnabled, breakpoint, tabBreakpoints, customCSS, tabCustomCSS } = STORAGE_KEYS;
 
-// Inject style element
-const injectStyleElement = () => {
-	state.styleElement = document.createElement("link");
-	state.styleElement.id = "midline-search-css";
-	state.styleElement.rel = "stylesheet";
-	state.styleElement.href = chrome.runtime.getURL("content/search-page.css");
-	document.head.appendChild(state.styleElement);
-};
+		if (customCSS in changes) state.commonCSS = changes[customCSS].newValue ?? "";
+		if (tabCustomCSS in changes) state.tabCSS = changes[tabCustomCSS].newValue ?? {};
+		if (breakpoint in changes) state.breakpoint = resolveBreakpoint(changes[breakpoint].newValue);
+		if (tabBreakpoints in changes) state.tabBreakpoints = changes[tabBreakpoints].newValue ?? {};
 
-// Set up media query
-const setupMediaQuery = () => {
-	if (state.mediaQueryList) {
-		state.mediaQueryList.removeEventListener("change", state.mediaQueryList._handler);
-	}
-
-	state.mediaQueryList = window.matchMedia(`(min-width: ${state.breakpoint}px)`);
-	const handler = (mql) => {
-		document.documentElement.classList.toggle("midline-search-wide", mql.matches);
-	};
-	state.mediaQueryList._handler = handler;
-	state.mediaQueryList.addEventListener("change", handler);
-	// Apply initial state
-	document.documentElement.classList.toggle("midline-search-wide", state.mediaQueryList.matches);
-};
-
-// Remove CSS
-const removeCSS = () => {
-	try {
-		const existingStyle = document.getElementById("midline-search-css");
-		existingStyle?.remove();
-
-		if (state.styleElement) {
-			state.styleElement.remove();
-			state.styleElement = null;
+		// The switch re-applies everything above it, so it stands in for the rest
+		if (cssEnabled in changes) {
+			setCSSEnabled(changes[cssEnabled].newValue ?? true);
+			return;
 		}
 
-		if (state.mediaQueryList) {
-			state.mediaQueryList.removeEventListener("change", state.mediaQueryList._handler);
-			state.mediaQueryList = null;
-		}
-
-		document.documentElement.classList.remove("midline-search-wide");
-	} catch (error) {
-		console.error("Failed to remove CSS:", error);
-	}
-};
-
-// Apply custom CSS
-const applyCustomCSS = (css) => {
-	try {
-		let customStyle = document.getElementById("midline-search-custom-css");
-		if (!customStyle) {
-			customStyle = document.createElement("style");
-			customStyle.id = "midline-search-custom-css";
-			document.head.appendChild(customStyle);
-		}
-		customStyle.textContent = css;
-	} catch (error) {
-		console.error("Failed to apply custom CSS:", error);
-	}
-};
-
-// Set up storage listeners and initialization
-const setupStorageListeners = () => {
-	if (!chrome.storage.local) {
-		console.error("Chrome storage API is not available");
-		return;
-	}
-
-	// Load initial custom CSS
-	chrome.storage.local.get(["customCSS"], (result) => {
-		if (result.customCSS) {
-			applyCustomCSS(result.customCSS);
-		}
-	});
-
-	// Monitor storage changes
-	chrome.storage.onChanged.addListener((changes, namespace) => {
-		if (namespace !== "local") return;
-
-		if (changes.customCSS) {
-			applyCustomCSS(changes.customCSS.newValue);
-		}
-		if (changes.breakpoint) {
-			state.setBreakpoint(changes.breakpoint.newValue);
-		}
+		if (customCSS in changes || tabCustomCSS in changes) applyUserCSS();
+		if (state.isCSSEnabled && (breakpoint in changes || tabBreakpoints in changes)) watchViewport();
 	});
 };
 
-// Initialize
-initializeState();
-setupStorageListeners();
-setupTabClassMonitoring();
+// Initialize. The tab class first: it is what scopes the CSS, and setting it here
+// means a page loaded from the network carries it before it paints.
+watchTabSwitches();
+loadSettings();
+watchSettings();
