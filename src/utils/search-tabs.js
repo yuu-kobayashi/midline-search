@@ -24,7 +24,7 @@ const DEFAULT_TAB_KEY = "all";
 const SEARCH_TABS = [
 	{ key: "all", i18nKey: "tab_all" },
 	{ key: "ai-mode", i18nKey: "tab_ai_mode", udm: ["50"] },
-	{ key: "images", i18nKey: "tab_images", udm: ["2"], tbm: ["isch"] },
+	{ key: "images", i18nKey: "tab_images", udm: ["2", "imgs"], tbm: ["isch"] },
 	{ key: "videos", i18nKey: "tab_videos", udm: ["7", "vids"], tbm: ["vid"] },
 	{ key: "short-videos", i18nKey: "tab_short_videos", udm: ["39"] },
 	{ key: "news", i18nKey: "tab_news", udm: ["12"], tbm: ["nws"] },
